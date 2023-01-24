@@ -12,30 +12,53 @@
 </head>
 <body>
 <main mv-app class="talks" mv-plugins="gsheets" mv-storage="https://docs.google.com/spreadsheets/d/1-es8z4XglSxjPqoa90SHF0p7kyzYhvgzsstUzwHzFSQ/edit" mv-storage-sheet="Sheet1" >
-	<h1>[count(event)] elemento </h1>
-	<article mv-multiple property="event" mv-order="desc">	
-		<h2>		
-			<span property="link"></span>
-		</h2>
-		<h2>
-			<span property="gsheet"></span>
-		</h2>
-		<p class="date"><span property="fecha"></span></p>
-		<p property="nombres"></p>
-		<p property="apellidos"></p>
-    	<nobr><p property="telefono"></p></nobr>
-		<p property="direccion"></p>
-		<p property="credencial"></p>
-		<p property="seccion"></p>
-		<p property="correo"></p>
-		<p property="coordenadas"></p>
-		<p property="peticion"></p>
-		<p property="proposicion"></p>
-		<p property="consulta"></p>
-		<p property="denuncia"></p>
-		<p property="nota"></p>
-		<p property="extras"></p>
+	<h1>
+		Decisions
+		<span>Decisions</span>
+	</h1>
+
+	<article property="decision" mv-multiple>
+		<header class="answer answer-[answer]">
+			<h1 property="decision">Should I go to the party?</h1>
+
+			<p>
+				Answer: <span property="answer">[if(score > 0, Yes, if(score < 0, No, Maybe))]</span>!
+				(score: <span property="score">[sum(pro.weight) - sum(con.weight)]</span>)
+			</p>
+		</header>
+
+		<section>
+			<h2>[count(pro)] pro(s)</h2>
+			<ul>
+				<li property="pro" class="reason" style="--weight: [weight]" mv-multiple mv-accepts="con">
+					<p property="argument">Fun with friends!</p>
+					<p class="weight">
+						Weight:
+						<meter property="weight" min="1" mv-default="1" max="5"></meter>
+						[weight]
+					</p>
+				</li>
+			</ul>
+		</section>
+
+		<section>
+			<h2>[count(con)] con(s)</h2>
+			<ul>
+				<li property="con" class="reason" style="--weight: [weight]" mv-multiple mv-accepts="pro">
+					<p property="argument">I have tons of work to do.</p>
+					<p class="weight">
+						Weight:
+						<meter property="weight" min="1" mv-default="1" max="5"></meter>
+						[weight]
+					</p>
+				</li>
+			</ul>
+		</section>
 	</article>
+
+	<footer>Total: [count(score > 0)] “yes” decision(s) and [count(score < 0)] “no” decision(s)</footer>
 </main>
+
+
 </body>
 </html>
